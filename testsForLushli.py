@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 import unittest
 import time
 
-class LushliTestsExistanceOftheElemnts(unittest.TestCase):
+class TestLushliWebExistanceOftheElemnts(unittest.TestCase):
 
     def setUp(self):
         self.driver = webdriver.Chrome('/Users/andrii/Downloads/chromedriver_mac64/chromedriver')
@@ -78,7 +78,7 @@ class LushliTestsExistanceOftheElemnts(unittest.TestCase):
         self.driver.close()
 
 
-class LushliTestsSearchFieldProperWork(unittest.TestCase):
+class TestLushliSearchFieldandLinkProperWork(unittest.TestCase):
 
     def setUp(self):
         self.driver = webdriver.Chrome('/Users/andrii/Downloads/chromedriver_mac64/chromedriver')
@@ -99,7 +99,6 @@ class LushliTestsSearchFieldProperWork(unittest.TestCase):
         driver.find_element_by_name('mail').send_keys('test@test.com')
         driver.find_element_by_id("login").click()
         time.sleep(5)
-        print(driver.find_element_by_id('react-root').text)
         assert driver.find_element_by_id('react-root')
 
     def test_NegativeofLogIN(self):
@@ -111,6 +110,26 @@ class LushliTestsSearchFieldProperWork(unittest.TestCase):
         alert = driver.switch_to.alert
         alert.accept()
         assert driver.find_element_by_id("login")
+
+    def test_TermsAndConditions(self):
+        driver = self.driver
+        driver.get('https://lushli.com/theinkeylist/')
+        link = driver.find_element_by_xpath(
+        '//*[@id="challenge-part"]/div/aside[2]/section/article[2]/div[1]/form/label/a')
+        url = link.get_attribute("href")
+        assert url == 'https://www.preen.me/c/theinkeylisttandc#/'
+
+    def test_TermsAndConditionsTransfer(self):
+        driver = self.driver
+        driver.get('https://lushli.com/theinkeylist/')
+        link = driver.find_element_by_xpath(
+        '//*[@id="challenge-part"]/div/aside[2]/section/article[2]/div[1]/form/label/a')
+        link.click()
+        time.sleep(8)
+        driver.switch_to.window(driver.window_handles[1])
+        assert driver.current_url == 'https://www.preen.me/c/theinkeylisttandc#/'
+
+
 
     def tearDown(self):
         self.driver.close()
