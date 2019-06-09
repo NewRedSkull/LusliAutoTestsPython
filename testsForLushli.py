@@ -129,7 +129,18 @@ class TestLushliSearchFieldandLinkProperWork(unittest.TestCase):
         driver.switch_to.window(driver.window_handles[1])
         assert driver.current_url == 'https://www.preen.me/c/theinkeylisttandc#/'
 
-
+    def test_TermsAndConditionsTransferBack(self):
+        driver = self.driver
+        driver.get('https://lushli.com/theinkeylist/')
+        link = driver.find_element_by_xpath(
+        '//*[@id="challenge-part"]/div/aside[2]/section/article[2]/div[1]/form/label/a')
+        link.click()
+        time.sleep(8)
+        driver.switch_to.window(driver.window_handles[1])
+        time.sleep(8)
+        driver.switch_to.window(driver.window_handles[0])
+        #print(driver.current_url)
+        assert driver.current_url == 'https://lushli.com/theinkeylist/'
 
     def tearDown(self):
         self.driver.close()
